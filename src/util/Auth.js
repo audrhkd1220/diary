@@ -1,10 +1,11 @@
-import app from "./../firebase";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { authService } from "../firebase";
 
-const auth = getAuth();
 
-export const signUp = async (email, password) => {
-    const result = await createUserWithEmailAndPassword(auth,email,password).then((userCredential) => {
+
+
+export async function signUp(email, password) {
+    await createUserWithEmailAndPassword(authService,email,password).then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
     }).catch((err) => {
@@ -12,18 +13,29 @@ export const signUp = async (email, password) => {
         console.log(err.message);
         alert('회원가입 실패!');
     });
-    console.log(result);
 }
 
-export const signIn = async (email, password, navigate) => {
-    const result = await signInWithEmailAndPassword(auth,email,password).then((userCredential)=> {
+export async function signIn(email, password, navigate) {
+    await signInWithEmailAndPassword(authService,email,password).then((userCredential)=> {
         sessionStorage.setItem("email", email);
         navigate("/",{replace: true});
     }).catch((err)=>{
-        console.log(err.code);
-        console.log(err.message);
-        alert('로그인 실패!');
+        alert('로그인에 실패했습니다. 아이디나 비밀번호를 확인하세요.');
     });
-    console.log(result);
 }
 
+export async function socialLogin(type, navigate) {
+    let provider;
+    if(type === 'google'){
+        provider = new GoogleAuthProvider();  
+    } else if (type === 'facebook'){
+        provider = new FacebookAuthProvider();
+    }
+
+    await signInWithPopup(authService, provider).then((result) => {
+        sessionStorage.setItem('email', result.user.email);
+        navigate("/",{replace: true});
+    }).catch((err)=> {
+        alert('로그인에 실패했습니다. 아이디나 비밀번호를 확인하세요.');
+    });
+}

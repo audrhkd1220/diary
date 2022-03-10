@@ -1,21 +1,26 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Home from './pages/Home';
-//import { firestore } from "./firebase";
-import app from "./firebase";
-import SignUp from './components/SignUp';
+import Login from './pages/Login';
 
 
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const email = sessionStorage.getItem('email');
+    email != null ? setUser(email) : setUser(null);
+  },[user]);
   
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}/>
+          <Route path="/" element={ user ? <Home /> : <Login /> }/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -8,8 +8,8 @@
   text-align: center;
 }
 
-/* Home */
-.Home {
+/* Login */
+.Login {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,24 +23,31 @@
   width: 375px;
 }
 
-.Home div {
-  padding-top: 20px;
+.login_img_wrapper {
   width: 85%;
   height: 50%;
 }
 
-.signIn {
+.login_form_wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   align-items: center;
 
+  padding-top: 20px;
+  padding-bottom: 20px;
+
   width: 100%;
   height: auto;
 }
 
-.signIn input {
+.login_form_wrapper form {
+  width: 100%;
+  height: 100%;
+}
+
+.login_form input {
   width: 100%;
   height: 45px;
   border-radius: 5px;
@@ -52,7 +59,7 @@
   text-indent: 10px;
 }
 
-.signIn button {
+.login_form button {
   width: 100%;
   height: 45px;
   background-color: #3196ee;
@@ -79,3 +86,30 @@
   cursor: pointer;
   color: #888;
 }
+
+.social_login_wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.social_login_wrapper button {
+  border: 0;
+  width: 100%;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  color: #888;
+}
+
+.social_login_wrapper button img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+}
+
+/* Diary */ ;
