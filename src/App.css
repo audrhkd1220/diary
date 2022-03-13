@@ -1,6 +1,30 @@
-* {
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Pen+Script&family=Yeon+Sung&display=swap");
+
+body {
+  align-items: center;
+  display: flex;
+  font-family: "Nanum Pen Script";
+  justify-content: center;
   margin: 0px;
-  padding: 0px;
+  min-height: 100vh;
+}
+
+/* 가로가 650px 이상일때 */
+@media (min-width: 650px) {
+  .App {
+    width: 640px;
+  }
+}
+/* 가로가 650px 이하일때 */
+@media (max-width: 650px) {
+  .App {
+    width: 90vw;
+  }
+}
+
+#root {
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .App {
@@ -16,16 +40,22 @@
   align-content: center;
   align-items: center;
   margin: 0 auto;
-
-  max-width: 1920px;
-  min-height: 100vh;
-
-  width: 375px;
 }
 
 .login_img_wrapper {
-  width: 85%;
+  width: 70%;
   height: 50%;
+}
+
+.login_img_wrapper img {
+  width: 100%;
+  height: 50%;
+}
+
+.login_img_wrapper h1 {
+  font-size: 60px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .login_form_wrapper {
@@ -36,8 +66,6 @@
   align-items: center;
 
   padding-top: 20px;
-  padding-bottom: 20px;
-
   width: 100%;
   height: auto;
 }
@@ -70,23 +98,6 @@
   font-size: 18px;
 }
 
-.assistance {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: auto;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.assistance button {
-  border: 0;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-  color: #888;
-}
-
 .social_login_wrapper {
   display: flex;
   align-items: center;
@@ -110,6 +121,122 @@
   width: 50px;
   height: 50px;
   margin-bottom: 5px;
+}
+
+.signUp_wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-top: 10px;
+}
+
+.signUp_wrapper button {
+  width: 100%;
+  height: 45px;
+  background-color: white;
+  border: 1px solid #eeeeee;
+  border-radius: 7px;
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+/* SignUp */
+.SignUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  width: 100%;
+  height: 100%;
+  font-family: "Nanum Gothic";
+}
+
+.title_wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 50px;
+  position: relative;
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 20px;
+}
+
+.title_wrapper button {
+  margin-left: 10px;
+}
+
+.Button_title {
+  display: block;
+  position: absolute;
+  left: 0;
+  background-color: #ececec;
+  border: none;
+}
+
+.signUp_form {
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.signUp_form label {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.signUp_form input {
+  width: 100%;
+  height: 45px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  box-sizing: border-box;
+  line-height: 45px;
+  text-indent: 10px;
+}
+
+.signUp_form label p {
+  display: flex;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.signUp_form label p span {
+  color: red;
+}
+
+/* Button */
+.Button {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  font-size: 18px;
+  white-space: nowrap;
+  font-family: "Nanum Pen Script";
 }
 
 /* Diary */ ;

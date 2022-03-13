@@ -2,8 +2,6 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthP
 import { authService } from "../firebase";
 
 
-
-
 export async function signUp(email, password) {
     await createUserWithEmailAndPassword(authService,email,password).then((userCredential) => {
         const user = userCredential.user;
@@ -15,16 +13,16 @@ export async function signUp(email, password) {
     });
 }
 
-export async function signIn(email, password, navigate) {
+export async function signIn(email, password, setUser) {
     await signInWithEmailAndPassword(authService,email,password).then((userCredential)=> {
         sessionStorage.setItem("email", email);
-        navigate("/",{replace: true});
+        setUser(email);
     }).catch((err)=>{
         alert('로그인에 실패했습니다. 아이디나 비밀번호를 확인하세요.');
     });
 }
 
-export async function socialLogin(type, navigate) {
+export async function socialLogin(type, setUser) {
     let provider;
     if(type === 'google'){
         provider = new GoogleAuthProvider();  
@@ -34,7 +32,7 @@ export async function socialLogin(type, navigate) {
 
     await signInWithPopup(authService, provider).then((result) => {
         sessionStorage.setItem('email', result.user.email);
-        navigate("/",{replace: true});
+        setUser(result.user.email);
     }).catch((err)=> {
         alert('로그인에 실패했습니다. 아이디나 비밀번호를 확인하세요.');
     });
