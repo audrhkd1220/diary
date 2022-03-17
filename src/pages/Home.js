@@ -14,9 +14,9 @@ const Home = () => {
     
 
     return (
-        <div>
+        <>
             { user != null ? <Diary /> : <Login user={user} setUser={setUser}/> }
-        </div>
+        </>
     );
 }
 

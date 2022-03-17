@@ -2,15 +2,22 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthP
 import { authService } from "../firebase";
 
 
-export async function signUp(email, password) {
+export async function signUp(email, password, page) {
     await createUserWithEmailAndPassword(authService,email,password).then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
+        alert("회원가입에 성공하였습니다. 로그인 후 이용해주세요.");
+        page();
     }).catch((err) => {
-        console.log(err.code);
-        console.log(err.message);
-        alert('회원가입 실패!');
+        alert('회원가입에 실패했습니다. 다시 시도해주세요.');
     });
+}
+
+export async function emailDbCheck(email) {
+    let msg = "";
+    await signInWithEmailAndPassword(authService,email,1).then((userCredential)=> {
+    }).catch((err)=>{
+        msg = err.code;
+    });
+    return msg;
 }
 
 export async function signIn(email, password, setUser) {
@@ -18,7 +25,8 @@ export async function signIn(email, password, setUser) {
         sessionStorage.setItem("email", email);
         setUser(email);
     }).catch((err)=>{
-        alert('로그인에 실패했습니다. 아이디나 비밀번호를 확인하세요.');
+        console.log(err.code);
+        alert('로그인에 실패했습니다. 아이디, 비밀번호를 확인하세요.');
     });
 }
 
@@ -34,6 +42,6 @@ export async function socialLogin(type, setUser) {
         sessionStorage.setItem('email', result.user.email);
         setUser(result.user.email);
     }).catch((err)=> {
-        alert('로그인에 실패했습니다. 아이디나 비밀번호를 확인하세요.');
+        alert('로그인에 실패했습니다.');
     });
 }

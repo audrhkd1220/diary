@@ -1,29 +1,68 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn, socialLogin } from "./../util/Auth";
 
-import {EmailContext, EmailDispatchContext} from '../App';
+import { signIn, socialLogin } from "./../util/Auth";
+import Icon from "@mdi/react";
+import { mdiEmail, mdiLock } from '@mdi/js';
+
+
 
 const Login = (props) => {
 
-    const [email,setEmail]= useState("");
-    const [password,setPassword]=useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [mdiEmailColor, setMdiEmailColor] = useState('black');
+    const [mdiLockColor, setMdiLockColor] = useState('black');
+    const [emailMsg, setEmailMsg] = useState(false);
+    const [passwordMsg, setPasswordMsg] = useState(false);
+    const [btnDisabled, setBtnDisabled] = useState(true);
+
     const navigate = useNavigate();
     
 
-    const onSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-
-        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-
-        if(! regEmail.test(email)){
-            alert('아이디(이메일) 형식을 확인해주세요.');
-            document.getElementById("email").focus();
-            return;
-        }
-
+  
         signIn(email, password, props.setUser);
     }
+
+    useEffect(() => {
+        if(mdiEmailColor === 'blue' && mdiLockColor === 'blue'){
+            setBtnDisabled(false);
+        }else {
+            setBtnDisabled(true);
+        }
+    },[mdiEmailColor, mdiLockColor]);
+
+    useEffect(()=>{
+        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+
+        if(email.length === 0) {
+            setMdiEmailColor('black');
+            setEmailMsg(false);
+        }else if(regEmail.test(email)) {
+            setMdiEmailColor('blue');
+            setEmailMsg(false);
+        } else {
+            setMdiEmailColor('red');
+            setEmailMsg(true);
+        }
+    },[email]);
+
+    useEffect(() => {
+        const regPassword =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*+=-])[A-Za-z\d!@#$%^&*+=-]{8,}$/;
+
+        if(password.length === 0) {
+            setMdiLockColor('black');
+            setPasswordMsg(false);
+        }else if(regPassword.test(password)) {
+            setMdiLockColor('blue');
+            setPasswordMsg(false);
+        } else {
+            setMdiLockColor('red');
+            setPasswordMsg(true);
+        }
+    },[password]);
 
 
     return (
@@ -32,25 +71,41 @@ const Login = (props) => {
                     <img src={`${process.env.PUBLIC_URL}assets/main.svg`}/>
                     <h1>Emotion Diary</h1>
             </div>
-            <div className="login_form_wrapper">
-                <form className="login_form" onSubmit={onSubmit}>
-                    <input type="text" id="email" placeholder="아이디" required onChange={(e) => setEmail(e.target.value)}/>
-                    <input type="password" id="password" placeholder="비밀번호" required onChange={(e) => setPassword(e.target.value)}/>
-                    <button type="submit" >로그인</button>
-                </form>
-            </div>
-            <div className="signUp_wrapper">
-                <button onClick={() => navigate("/signUp")}>회원가입</button>
-            </div>
-            <div className="social_login_wrapper">
-                <button onClick={() => socialLogin("google", props.setUser)}>
-                    <img src={`${process.env.PUBLIC_URL}/assets/google_btn.svg`} />
-                    <figcaption>구글로 시작하기</figcaption>
-                </button>
-                <button onClick={() => socialLogin("facebook", props.setUser)}>
-                    <img src={`${process.env.PUBLIC_URL}/assets/facebook_btn.svg`} />
-                    <figcaption>페이스북으로 시작하기</figcaption>
-                </button>
+            <div>
+                <div className="login_form_wrapper">
+                    <form className="login_form" onSubmit={handleSubmit}>
+                        <div>
+                            <p><label for="email">Email address</label></p>
+                            <div className={`input_wrapper border_${mdiEmailColor}`}>
+                                <Icon path={ mdiEmail } size={1.2} color={mdiEmailColor}/>
+                                <input type="text" id="email" placeholder="아이디" required onChange={(e) => setEmail(e.target.value)}/>
+                            </div>     
+                            { emailMsg && <span className="color_red">이메일 형식을 확인해주세요.</span> }
+                        </div>
+                        <div>
+                            <p><label for="password">Password</label></p>
+                            <div className={`input_wrapper border_${mdiLockColor}`}>
+                                <Icon path={ mdiLock } size={1.2} color={mdiLockColor}/>
+                                <input type="password" id="password" placeholder="비밀번호" required onChange={(e) => setPassword(e.target.value)}/>
+                            </div>
+                            { passwordMsg && <span className="color_red">비밀번호를 확인해주세요.(영문,숫자,특수문자 조합 8자 이상)</span> }
+                        </div>
+                        <button className={`disabled_btn_${btnDisabled}`} type="submit" disabled={btnDisabled}>로그인</button>
+                    </form>
+                </div>
+                <div className="signUp_wrapper">
+                    <button onClick={() => navigate("/signUp")}>회원가입</button>
+                </div>
+                <div className="social_login_wrapper">
+                    <button onClick={() => socialLogin("google", props.setUser)}>
+                        <img src={`${process.env.PUBLIC_URL}/assets/google_btn.svg`} />
+                        <figcaption>구글로 시작하기</figcaption>
+                    </button>
+                    <button onClick={() => socialLogin("facebook", props.setUser)}>
+                        <img src={`${process.env.PUBLIC_URL}/assets/facebook_btn.svg`} />
+                        <figcaption>페이스북으로 시작하기</figcaption>
+                    </button>
+                </div>
             </div>
         </div>
     );
