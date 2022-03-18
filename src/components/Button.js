@@ -4,4 +4,8 @@ const Button = ({text, type, onClick}) => {
     );
 }
 
+Button.defaultProps = {
+    type: "default"
+};
+
 export default Button;

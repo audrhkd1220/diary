@@ -341,4 +341,102 @@ header button {
   font-family: "Nanum Pen Script";
 }
 
-/* Diary */
+/* DiaryList */
+.DiaryList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.menu_wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.menu_wrapper .left_menu {
+  width: 35%;
+  display: flex;
+}
+
+.menu_wrapper .right_menu {
+  flex-grow: 1;
+}
+
+.menu_wrapper .right_menu button {
+  width: 100%;
+}
+
+.OptionBar {
+  background-color: #efefef;
+  border-radius: 5px;
+  position: relative;
+  transition: all 0.5s;
+  width: 50%;
+
+  margin-right: 10px;
+}
+
+.OptionBar li {
+  list-style: none;
+}
+
+.OptionBar.active {
+  border-radius: 5px 5px 0px 0px;
+  transition: all 0.5s;
+}
+
+.OptionBar .arrowImage_wrapper {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.OptionBar .arrowImage_wrapper > div {
+  width: 100%;
+  height: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.OptionBar .arrowImage_wrapper .arrowImage {
+  position: absolute;
+  right: 5px;
+}
+
+.OptionBar .optionList {
+  background-color: #efefef;
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  max-height: 0px;
+  transition: all 0.5s ease;
+  overflow: hidden;
+  padding: 0;
+  width: calc(100% - 1px);
+}
+
+.optionList.active {
+  border: 1px solid #e2e2e2;
+  max-height: 1000px;
+}
+
+.optionList li {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #e2e2e2;
+
+  text-align: center;
+}
+
+.optionList li:last-child {
+  border-bottom: none;
+}

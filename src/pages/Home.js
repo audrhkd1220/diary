@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { signIn, signUp } from "./../util/Auth";
 import { useNavigate } from "react-router-dom";
 import Login from "./Login";
-import Diary from "./Diary";
+import DiaryList from "../components/DiaryList";
 
 const Home = () => {
 
@@ -15,7 +15,7 @@ const Home = () => {
 
     return (
         <>
-            { user != null ? <Diary /> : <Login user={user} setUser={setUser}/> }
+            { user != null ? <DiaryList /> : <Login user={user} setUser={setUser}/> }
         </>
     );
 }
