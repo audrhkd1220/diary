@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
-import { signIn, signUp } from "./../util/Auth";
-import { useNavigate } from "react-router-dom";
-import Login from "./Login";
+import { useContext, useEffect } from "react";
+import Login from "../components/Login";
 import DiaryList from "../components/DiaryList";
+import { UserStateContext } from "../App";
+
 
 const Home = () => {
 
-    const [user, setUser] = useState(null);
+    const {user, setUser} = useContext(UserStateContext);
 
-    useEffect(()=>{
-        setUser(sessionStorage.getItem('email'));
+    useEffect(() => {
+        setUser(sessionStorage.getItem("user"));
     },[user]);
-    
 
     return (
         <>
-            { user != null ? <DiaryList /> : <Login user={user} setUser={setUser}/> }
+            { user != null ? <DiaryList /> : <Login /> }
         </>
     );
 }

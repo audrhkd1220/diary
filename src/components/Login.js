@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { signIn, socialLogin } from "./../util/Auth";
+import { signIn, socialLogin } from "../util/Auth";
 import Icon from "@mdi/react";
 import { mdiEmail, mdiLock } from '@mdi/js';
+import { UserStateContext } from "../App";
 
 
-
-const Login = (props) => {
+const Login = () => {
+    const {setUser} = useContext(UserStateContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ const Login = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
   
-        signIn(email, password, props.setUser);
+        signIn(email, password, setUser);
     }
 
     useEffect(() => {
@@ -36,6 +37,7 @@ const Login = (props) => {
 
     useEffect(()=>{
         const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        const regPassword =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*+=-])[A-Za-z\d!@#$%^&*+=-]{8,}$/;
 
         if(email.length === 0) {
             setMdiEmailColor('black');
@@ -47,10 +49,6 @@ const Login = (props) => {
             setMdiEmailColor('red');
             setEmailMsg(true);
         }
-    },[email]);
-
-    useEffect(() => {
-        const regPassword =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*+=-])[A-Za-z\d!@#$%^&*+=-]{8,}$/;
 
         if(password.length === 0) {
             setMdiLockColor('black');
@@ -62,7 +60,8 @@ const Login = (props) => {
             setMdiLockColor('red');
             setPasswordMsg(true);
         }
-    },[password]);
+    },[email, password]);
+
 
 
     return (
@@ -97,11 +96,11 @@ const Login = (props) => {
                     <button onClick={() => navigate("/signUp")}>회원가입</button>
                 </div>
                 <div className="social_login_wrapper">
-                    <button onClick={() => socialLogin("google", props.setUser)}>
+                    <button onClick={() => socialLogin("google", setUser)}>
                         <img src={`${process.env.PUBLIC_URL}/assets/google_btn.svg`} />
                         <figcaption>구글로 시작하기</figcaption>
                     </button>
-                    <button onClick={() => socialLogin("facebook", props.setUser)}>
+                    <button onClick={() => socialLogin("facebook", setUser)}>
                         <img src={`${process.env.PUBLIC_URL}/assets/facebook_btn.svg`} />
                         <figcaption>페이스북으로 시작하기</figcaption>
                     </button>

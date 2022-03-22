@@ -22,10 +22,9 @@ export async function emailDbCheck(email) {
 
 export async function signIn(email, password, setUser) {
     await signInWithEmailAndPassword(authService,email,password).then((userCredential)=> {
-        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("user", email);
         setUser(email);
     }).catch((err)=>{
-        console.log(err.code);
         alert('로그인에 실패했습니다. 아이디, 비밀번호를 확인하세요.');
     });
 }
@@ -39,9 +38,10 @@ export async function socialLogin(type, setUser) {
     }
 
     await signInWithPopup(authService, provider).then((result) => {
-        sessionStorage.setItem('email', result.user.email);
+        sessionStorage.setItem('user', result.user.email);
         setUser(result.user.email);
     }).catch((err)=> {
         alert('로그인에 실패했습니다.');
     });
 }
+

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 
@@ -88,7 +88,7 @@ const SignUp = () => {
     }
 
     //체크박스 체크 함수
-    const checkHandler = (id, checked) => {
+    const checkHandler = useCallback((id, checked) => {
         if(checked) {
             if(id === 'allAgree') setCheckedInputs(['allAgree', 'agree1', 'agree2', 'agree3']);
             else setCheckedInputs([...checkedInputs, id]);
@@ -96,7 +96,7 @@ const SignUp = () => {
             if(id === 'allAgree') setCheckedInputs([]);
             else setCheckedInputs(checkedInputs.filter((it) => it != id));
         }
-    }
+    },[]);
 
     //회원가입 버튼 활성화 함수
     useEffect(() => {
@@ -122,7 +122,7 @@ const SignUp = () => {
 
     return (
         <div className="SignUp">
-            <Header headText={"회원가입"} leftChild={<Button text="< 뒤로가기" type="title" onClick={() => navigate(-1)}/>} />
+            <Header headText={"회원가입"} leftChild={<Button text="< 뒤로가기" type="title" onClick={useCallback(() => navigate(-1),[])}/>} />
             <form className="signUp_form" onSubmit={handleSubmit}>
                 <div className="signUp_info_div">
                     <p><label for="email">이메일</label></p>
@@ -165,11 +165,11 @@ const SignUp = () => {
 export default SignUp;
 
 
-const CheckBox = ({id, text, checkHandler, checked}) => {
+const CheckBox = React.memo(({id, text, checkHandler, checked}) => {
     return (
         <span>
             <input type="checkbox" id={id} onChange={(e) => checkHandler(id, e.currentTarget.checked)} checked={checked} />
             <p><label for={id}>{text}</label></p>
         </span>
     );
-}
+});
