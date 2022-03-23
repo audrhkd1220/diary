@@ -56,6 +56,8 @@ const DiaryList = () => {
             const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(), 1).getTime();
             const lastDay = new Date(curDate.getFullYear(), curDate.getMonth()+1, 0, 23, 59, 59).getTime();
             setData(diaryList.filter((it) => firstDay <= parseInt(it.date.seconds) * 1000 && parseInt(it.date.seconds) * 1000 <= lastDay));
+        } else {
+            setData([]);
         }
     },[diaryList, curDate]);
 
@@ -95,6 +97,11 @@ const DiaryList = () => {
     const handleEdit = useCallback((targetId) => {
         navigate(`/edit/${targetId}`);
     },[]);
+
+    const logOut = useCallback(() => {
+        sessionStorage.removeItem("user"); setUser(null);
+        setData([]);
+    },[]);
     
     return (
         <div className="DiaryList">
@@ -103,7 +110,7 @@ const DiaryList = () => {
                 headText={`${curDate.getFullYear()}년 ${curDate.getMonth()+1}월`} 
                 rightChild={<Button text={">"} onClick={increaseMonth} />}
                 user={user}
-                logOut={useCallback(() => {sessionStorage.removeItem("user"); setUser(null);},[])}
+                logOut={logOut}
             />
             <div className="menu_wrapper">
                 <div className="left_menu">

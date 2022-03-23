@@ -20,6 +20,10 @@ const SignUp = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        document.getElementsByTagName("title")[0].innerHTML = `감정 일기장 - 회원가입`;
+    },[]);
+
 
     //이메일 유효성 및 중복확인 함수
     const emailCheck = () => {

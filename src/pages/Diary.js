@@ -17,6 +17,10 @@ const Diary = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.getElementsByTagName("title")[0].innerHTML = `감정 일기장 - ${id}번 일기`;
+    },[]);
+
+    useEffect(() => {
         if(diaryList.length > 0) {
             const targetDiary = diaryList.find((it) => parseInt(it.id) === parseInt(id));
             if(targetDiary) {
@@ -43,7 +47,7 @@ const Diary = () => {
         return (
             <div className="Diary">
                 <Header 
-                    leftChild={<Button text="< 뒤로가기" onClick={() => {navigate(-1)}}/>} 
+                    leftChild={<Button text="< 뒤로가기" onClick={() => navigate(-1)}/>} 
                     headText={`${getStringDate(new Date(parseInt(data.date.seconds*1000)))} 기록`} 
                 />
                 <article>

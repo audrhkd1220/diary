@@ -10,6 +10,11 @@ const Home = () => {
 
     useEffect(() => {
         setUser(sessionStorage.getItem("user"));
+        if(user) {
+            document.getElementsByTagName("title")[0].innerHTML = "감정 일기장";
+        } else {
+            document.getElementsByTagName("title")[0].innerHTML = "감정 일기장 - 로그인";
+        }
     },[user]);
 
     return (

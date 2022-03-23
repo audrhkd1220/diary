@@ -7,6 +7,7 @@ import Diary from './pages/Diary';
 import Edit from './pages/Edit';
 import New from './pages/New';
 import { addDiary, getDiary } from "./util/Database";
+import { mdiConsoleNetwork } from '@mdi/js';
 
 
 
@@ -18,6 +19,7 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "CREATE" : {
+      console.log(state);
       newState = [action.data, ...state];
       addDiary(action.user, newState);
       action.setReload(!action.reload);
@@ -94,7 +96,9 @@ function App() {
       getDiary(user).then((res) => {
         if(res.regions){
           setDiaryList(res.regions.sort((a,b) => parseInt(b.id) - parseInt(a.id)));
-        }      
+        } else {
+          setDiaryList([]);
+        }     
       });
     }
   }, [user,reload]);
@@ -103,6 +107,8 @@ function App() {
     if(diaryList.length > 0){
       dataId.current = parseInt(diaryList[0].id) + 1 ;
       dispatch({type: "INIT", data: diaryList});
+    } else {
+      dispatch({type: "INIT", data: []});
     }
   },[diaryList]);
   

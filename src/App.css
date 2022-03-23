@@ -162,27 +162,83 @@ body {
 
 .social_login_wrapper {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.social_login_wrapper hr {
+  position: relative;
+  bottom: -8px;
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #efefef;
+  border: none;
+}
+
+.social_login_wrapper span {
+  font-size: 20px;
+  z-index: 30;
+  line-height: 16px;
+  letter-spacing: -0.3px;
+  margin-bottom: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: white;
+}
+
+.social_login_btn_wrapper {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   height: auto;
   justify-content: space-between;
-  margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.social_login_wrapper button {
+.social_login_btn_wrapper button {
   border: 0;
   width: 100%;
+  height: 50px;
   background-color: transparent;
-  font-size: 14px;
+  border: 1px solid #efefef;
+  border-radius: 7px;
+  font-size: 20px;
   cursor: pointer;
   color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
-.social_login_wrapper button img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 5px;
+.social_login_btn_wrapper .google_btn {
+  background-color: white;
+}
+
+.social_login_btn_wrapper .google_btn img {
+  width: 25px;
+}
+
+.social_login_btn_wrapper .facebook_btn {
+  background-color: #329df0;
+}
+
+.social_login_btn_wrapper .facebook_btn span {
+  background-color: #329df0;
+  color: white;
+}
+
+.social_login_btn_wrapper .facebook_btn img {
+  width: 35px;
+}
+
+.social_login_btn_wrapper button span {
+  text-align: left;
+  margin: 0;
 }
 
 .signUp_wrapper {
@@ -660,6 +716,7 @@ header button {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .Diary .button_werapper button:first-child {

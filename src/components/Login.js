@@ -37,7 +37,7 @@ const Login = () => {
 
     useEffect(()=>{
         const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-        const regPassword =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*+=-])[A-Za-z\d!@#$%^&*+=-]{8,}$/;
+        const regPassword =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*+~=-?])[A-Za-z\d!@#$%^&*+~=-?]{8,}$/;
 
         if(email.length === 0) {
             setMdiEmailColor('black');
@@ -96,14 +96,18 @@ const Login = () => {
                     <button onClick={() => navigate("/signUp")}>회원가입</button>
                 </div>
                 <div className="social_login_wrapper">
-                    <button onClick={() => socialLogin("google", setUser)}>
-                        <img src={`${process.env.PUBLIC_URL}/assets/google_btn.svg`} />
-                        <figcaption>구글로 시작하기</figcaption>
-                    </button>
-                    <button onClick={() => socialLogin("facebook", setUser)}>
-                        <img src={`${process.env.PUBLIC_URL}/assets/facebook_btn.svg`} />
-                        <figcaption>페이스북으로 시작하기</figcaption>
-                    </button>
+                    <hr></hr>
+                    <span>간편 로그인</span>
+                    <div className="social_login_btn_wrapper">
+                        <button onClick={() => socialLogin("google", setUser)} className="google_btn">
+                            <img src={`https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg`} />
+                            <span>Sign with google</span>
+                        </button>
+                        <button onClick={() => socialLogin("facebook", setUser)} className="facebook_btn">
+                            <img src={`${process.env.PUBLIC_URL}/assets/facebook_btn.svg`} />
+                            <span>Sign with facebook</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

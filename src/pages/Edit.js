@@ -22,6 +22,10 @@ const Edit = () => {
         }
     },[diaryList, id]);
 
+    useEffect(() => {
+        document.getElementsByTagName("title")[0].innerHTML = `감정 일기장 - ${id}번 일기 수정`;
+    },[]);
+
     return (
         <div>
             {originData && <DiaryEditor isEdit={true} originData={originData} />}
