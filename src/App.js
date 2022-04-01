@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import Home from './pages/Home';
@@ -90,6 +90,9 @@ function App() {
     dispatch({type: "REMOVE", user, targetId, reload, setReload});
   }
 
+  useEffect(() => {
+    setUser(sessionStorage.getItem("user"));
+  },[]);
 
   useEffect(() => {
     if(user != null){

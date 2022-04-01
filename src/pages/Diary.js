@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DiaryDispatchContext, DiaryStateContext } from "../App";
 import { EmotionList } from "../util/EmotionList";
-import { getStringDate } from "../util/date";
+import { getStringDate } from "../util/Date";
 
 const Diary = () => {
 

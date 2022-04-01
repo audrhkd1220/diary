@@ -20,10 +20,11 @@ export async function emailDbCheck(email) {
     return msg;
 }
 
-export async function signIn(email, password, setUser) {
+export async function signIn(email, password, forceUpdate) {
     await signInWithEmailAndPassword(authService,email,password).then((userCredential)=> {
         sessionStorage.setItem("user", email);
-        setUser(email);
+        forceUpdate();
+        //setUser(email);
     }).catch((err)=>{
         alert('로그인에 실패했습니다. 아이디, 비밀번호를 확인하세요.');
     });

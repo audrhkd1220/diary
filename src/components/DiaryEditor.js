@@ -6,7 +6,7 @@ import Button from "./Button";
 import Header from "./Header";
 import { EmotionList } from "../util/EmotionList";
 import EmotionItem from "./EmotionItem";
-import { getStringDate } from "../util/date";
+import { getStringDate } from "../util/Date";
 
 const DiaryEditor = ({isEdit, originData}) => {
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { signIn, socialLogin } from "../util/Auth";
@@ -9,6 +9,8 @@ import { UserStateContext } from "../App";
 
 const Login = () => {
     const {setUser} = useContext(UserStateContext);
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}), []);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,7 +26,7 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
   
-        signIn(email, password, setUser);
+        signIn(email, password, forceUpdate);
     }
 
     useEffect(() => {
