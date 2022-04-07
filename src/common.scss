@@ -1,0 +1,29 @@
+@mixin flexCenter($direction, $justify, $align-c, $align-i) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align-i;
+  align-content: $align-c;
+}
+
+$custom-red: #fd565f;
+$custom-orange: #fd8446;
+$custom-yellow: #fdce17;
+$custom-lightGreen: #9dd772;
+$custom-green: #64c964;
+
+@mixin backColor($color) {
+  @if $color == "red" {
+    background-color: $custom-red;
+  } @else if $color == "orange" {
+    background-color: $custom-orange;
+  } @else if $color == "yellow" {
+    background-color: $custom-yellow;
+  } @else if $color == "lightGreen" {
+    background-color: $custom-lightGreen;
+  } @else if $color == "green" {
+    background-color: $custom-green;
+  } @else {
+    background-color: #efefef;
+  }
+}

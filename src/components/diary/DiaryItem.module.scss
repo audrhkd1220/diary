@@ -1,0 +1,73 @@
+@media (max-width: 650px) {
+}
+
+.DiaryItem {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e2e2e2;
+  max-height: 80px;
+
+  .emotion_img_wrapper {
+    cursor: pointer;
+    min-width: 120px;
+    height: 80px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 70%;
+    }
+  }
+
+  .info_wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 10px;
+    cursor: pointer;
+
+    .diary_date {
+      font-size: 25px;
+    }
+
+    .diary_content {
+      font-size: 20px;
+      white-space: normal;
+      overflow: hidden;
+      display: -webkit-box;
+      word-wrap: break-word;
+      word-break: break-all;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .btn_wrapper {
+    min-width: 86.98px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+  }
+}
+
+.emotion_img_wrapper_1 {
+  background-color: #fd565f;
+}
+.emotion_img_wrapper_2 {
+  background-color: #fd8446;
+}
+.emotion_img_wrapper_3 {
+  background-color: #fdce17;
+}
+.emotion_img_wrapper_4 {
+  background-color: #9dd772;
+}
+.emotion_img_wrapper_5 {
+  background-color: #64c964;
+}

@@ -1,25 +1,21 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import Login from "../components/Login";
-import DiaryList from "../components/DiaryList";
-import { UserStateContext } from "../App";
+import DiaryList from "../components/diary/DiaryList";
 
 
-const Home = () => {
-
-    const {user, setUser} = useContext(UserStateContext);
+const Home = ({forceUpdate, user}) => {
 
     useEffect(() => {
-        setUser(sessionStorage.getItem("user"));
-        if(user) {
-            document.getElementsByTagName("title")[0].innerHTML = "감정 일기장";
-        } else {
+        if(user === undefined || user === null) {
             document.getElementsByTagName("title")[0].innerHTML = "감정 일기장 - 로그인";
+        } else {
+            document.getElementsByTagName("title")[0].innerHTML = "감정 일기장";
         }
     },[user]);
 
     return (
         <>
-            { user != null ? <DiaryList /> : <Login /> }
+            { user != null ? <DiaryList forceUpdate={forceUpdate} user={user}/> : <Login forceUpdate={forceUpdate}/> }
         </>
     );
 }

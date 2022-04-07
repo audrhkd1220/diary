@@ -24,13 +24,12 @@ export async function signIn(email, password, forceUpdate) {
     await signInWithEmailAndPassword(authService,email,password).then((userCredential)=> {
         sessionStorage.setItem("user", email);
         forceUpdate();
-        //setUser(email);
     }).catch((err)=>{
         alert('로그인에 실패했습니다. 아이디, 비밀번호를 확인하세요.');
     });
 }
 
-export async function socialLogin(type, setUser) {
+export async function socialLogin(type, forceUpdate) {
     let provider;
     if(type === 'google'){
         provider = new GoogleAuthProvider();  
@@ -40,7 +39,7 @@ export async function socialLogin(type, setUser) {
 
     await signInWithPopup(authService, provider).then((result) => {
         sessionStorage.setItem('user', result.user.email);
-        setUser(result.user.email);
+        forceUpdate();
     }).catch((err)=> {
         alert('로그인에 실패했습니다.');
     });

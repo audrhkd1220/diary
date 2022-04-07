@@ -1,14 +1,12 @@
 import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState, useCallback } from 'react';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Diary from './pages/Diary';
 import Edit from './pages/Edit';
 import New from './pages/New';
 import { addDiary, getDiary } from "./util/Database";
-import { mdiConsoleNetwork } from '@mdi/js';
-
 
 
 
@@ -48,12 +46,40 @@ export const DiaryDispatchContext = React.createContext();
 
 
 function App() {
-  const [user, setUser] = useState(sessionStorage.getItem("user"));
+  const [user, setUser] = useState();
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
+
   const [data, dispatch] = useReducer(reducer, []);
   const [diaryList, setDiaryList] = useState([]);
   const [reload, setReload] = useState(false);
 
   const dataId = useRef(0);
+
+  useEffect(() => {
+    setUser(sessionStorage.getItem("user"));
+  },[ignored]);
+
+  useEffect(() => {
+    if(user != undefined || user != null){
+      getDiary(user).then((res) => {
+        if(res.regions){
+          setDiaryList(res.regions.sort((a,b) => parseInt(b.id) - parseInt(a.id)));
+        } else {
+          setDiaryList([]);
+        }     
+      });
+    }
+  }, [user,reload]);
+
+  useEffect(() => {
+    if(diaryList.length > 0){
+      dataId.current = parseInt(diaryList[0].id) + 1 ;
+      dispatch({type: "INIT", data: diaryList});
+    } else {
+      dispatch({type: "INIT", data: []});
+    }
+  },[diaryList]);
 
   const onCreate = (date, content, emotion) => {
     dispatch({
@@ -90,41 +116,13 @@ function App() {
     dispatch({type: "REMOVE", user, targetId, reload, setReload});
   }
 
-  useEffect(() => {
-    setUser(sessionStorage.getItem("user"));
-  },[]);
-
-  useEffect(() => {
-    if(user != null){
-      getDiary(user).then((res) => {
-        if(res.regions){
-          setDiaryList(res.regions.sort((a,b) => parseInt(b.id) - parseInt(a.id)));
-        } else {
-          setDiaryList([]);
-        }     
-      });
-    }
-  }, [user,reload]);
-
-  useEffect(() => {
-    if(diaryList.length > 0){
-      dataId.current = parseInt(diaryList[0].id) + 1 ;
-      dispatch({type: "INIT", data: diaryList});
-    } else {
-      dispatch({type: "INIT", data: []});
-    }
-  },[diaryList]);
-  
-  
-
   return (
     <DiaryStateContext.Provider value={diaryList}>
       <DiaryDispatchContext.Provider value={{onCreate, onEdit, onRemove}}>
-        <UserStateContext.Provider value={{user, setUser}}>
           <div className="App">
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={ <Home /> }/>
+                <Route path="/" element={ <Home forceUpdate={forceUpdate} user={user}/> }/>
                 <Route path="/signUp" element={ <SignUp /> } />
                 <Route path="/new" element={ <New /> } />
                 <Route path="/edit/:id" element={ <Edit /> } />
@@ -132,7 +130,6 @@ function App() {
               </Routes>
             </BrowserRouter>
           </div>
-        </UserStateContext.Provider>
       </DiaryDispatchContext.Provider>
     </DiaryStateContext.Provider>
   );

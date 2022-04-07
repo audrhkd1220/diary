@@ -1,7 +1,9 @@
+import styles from "./SignUp.module.scss";
+
 import { useNavigate } from "react-router-dom";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import Button from "../components/Button";
-import Header from "../components/Header";
+import Button from "../components/common/Button";
+import Header from "../components/common/Header";
 
 import Icon from "@mdi/react";
 import { mdiCheckCircleOutline } from '@mdi/js';
@@ -125,10 +127,10 @@ const SignUp = () => {
     
 
     return (
-        <div className="SignUp">
+        <div className={styles.SignUp}>
             <Header headText={"회원가입"} leftChild={<Button text="< 뒤로가기" type="title" onClick={useCallback(() => navigate(-1),[])}/>} />
-            <form className="signUp_form" onSubmit={handleSubmit}>
-                <div className="signUp_info_div">
+            <form className={styles.signUp_form} onSubmit={handleSubmit}>
+                <div className={styles.signUp_info_div}>
                     <p><label for="email">이메일</label></p>
                     <div>
                         <input type="text" id="email" required onBlur={emailCheck} ref={emailInput}/>
@@ -136,7 +138,7 @@ const SignUp = () => {
                     </div>
                     { msgList.email && <span className={`color_${emailColor}`}>{msgList.email}</span> }
                 </div>
-                <div className="signUp_info_div">
+                <div className={styles.signUp_info_div}>
                     <p><label for="password">비밀번호</label></p>
                     <div>
                         <input type="password" id="password" required onBlur={passwordCheck} ref={pwInput}/>
@@ -144,7 +146,7 @@ const SignUp = () => {
                     </div>
                     { msgList.password && <span className="color_red">{msgList.password}</span> }
                 </div>
-                <div className="signUp_info_div">
+                <div className={styles.signUp_info_div}>
                     <p><label for="passwordCheck">비밀번호 재확인</label></p>
                     <div>
                         <input type="password" id="passwordCheck" required onBlur={pwReCheck} ref={pwCheckInput}/>
@@ -152,7 +154,7 @@ const SignUp = () => {
                     </div>
                     { msgList.pwCheck && <span className="color_red">{msgList.pwCheck}</span> }
                 </div>
-                <div className="signUp_agree_div">
+                <div className={styles.signUp_agree_div}>
                     <CheckBox id="allAgree"  text="전체 약관 동의" checkHandler={checkHandler} checked={checkedInputs.includes('allAgree') ? true : false} />
                     <div>
                         <CheckBox id="agree1" text="회원가입 및 운영약관 동의" checkHandler={checkHandler} checked={checkedInputs.includes('agree1') ? true : false} />

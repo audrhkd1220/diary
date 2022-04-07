@@ -1,5 +1,6 @@
-import Header from "../components/Header";
-import Button from "../components/Button";
+import styles from "./Diary.module.scss";
+import Header from "../components/common/Header";
+import Button from "../components/common/Button";
 
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -45,7 +46,7 @@ const Diary = () => {
         const curEmotionData = EmotionList.find((it) => parseInt(it.emotion_id) === parseInt(data.emotion));
 
         return (
-            <div className="Diary">
+            <div className={styles.Diary}>
                 <Header 
                     leftChild={<Button text="< 뒤로가기" onClick={() => navigate(-1)}/>} 
                     headText={`${getStringDate(new Date(parseInt(data.date.seconds*1000)))} 기록`} 
@@ -53,21 +54,21 @@ const Diary = () => {
                 <article>
                     <section>
                         <h4>오늘의 감정</h4>
-                        <div className={["diary_img_wrapper", `diary_img_wrapper_${data.emotion}`].join(" ")}>
+                        <div className={[styles.diary_img_wrapper, styles[`diary_img_wrapper_${data.emotion}`]].join(" ")}>
                             <img src={process.env.PUBLIC_URL+`/assets/emotion${curEmotionData.emotion_id}.png`}/>
-                            <div className="emotion_descript">
+                            <div className={styles.emotion_descript}>
                                 <p>{curEmotionData.emotion_descript}</p>
                             </div>
                         </div>
                     </section>
                     <section>
                         <h4>오늘의 일기</h4>
-                        <div className="diary_content_wrapper">
+                        <div className={styles.diary_content_wrapper}>
                             <p>{data.content}</p>
                         </div>
                     </section>
                     <section>
-                        <div className="button_werapper">
+                        <div className={styles.button_werapper}>
                             <Button text="수정하기" onClick={() => {navigate(`/edit/${data.id}`)}}/>
                             <Button text="삭제하기" type="negative" onClick={() => {handleRemove(data.id)}}/>
                         </div>

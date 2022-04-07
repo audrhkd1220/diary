@@ -1,12 +1,12 @@
-import { type } from "@testing-library/user-event/dist/type";
+import styles from "./DiaryEditor.module.scss";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DiaryDispatchContext } from "../App";
-import Button from "./Button";
-import Header from "./Header";
-import { EmotionList } from "../util/EmotionList";
-import EmotionItem from "./EmotionItem";
-import { getStringDate } from "../util/Date";
+import { DiaryDispatchContext } from "../../App";
+import Button from "../common/Button";
+import Header from "../common/Header";
+import { EmotionList } from "../../util/EmotionList";
+import EmotionItem from "../EmotionItem";
+import { getStringDate } from "../../util/Date";
 
 const DiaryEditor = ({isEdit, originData}) => {
 
@@ -24,7 +24,7 @@ const DiaryEditor = ({isEdit, originData}) => {
         setEmotion(emotion);
     },[]);
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         if(content.length < 1) {
             contentRef.current.focus();
             return;
@@ -38,7 +38,7 @@ const DiaryEditor = ({isEdit, originData}) => {
             }
             navigate("/",{replace: true});
         }
-    };
+    },[content]);
 
     useEffect(()=>{
         if(isEdit){
@@ -52,20 +52,19 @@ const DiaryEditor = ({isEdit, originData}) => {
 
 
     return (
-        <div className="DiaryEditor">
+        <div className={styles.DiaryEditor}>
             <Header leftChild={<Button text="< 뒤로가기" onClick={useCallback(() => navigate(-1),[])}/> } 
                 headText={isEdit ? "일기 수정하기" : "새 일기쓰기"}
             />
-            <div>
                 <section>
                     <h4>오늘은 언제인가요?</h4>
                     <div>
-                        <input className="input_date" type="date" value={date} onChange={(e) => setDate(e.target.value)}/>
+                        <input className={styles.input_date} type="date" value={date} onChange={(e) => setDate(e.target.value)}/>
                     </div>
                 </section>
                 <section>
                     <h4>오늘의 감정</h4>
-                    <div className="input_box emotion_list_wrapper">
+                    <div className={`${styles.input_box} ${styles.emotion_list_wrapper}`}>
                         {EmotionList.map((it) => (
                             <EmotionItem key={it.emotion_id}
                                 {...it}
@@ -77,7 +76,7 @@ const DiaryEditor = ({isEdit, originData}) => {
                 </section>
                 <section>
                     <h4>오늘의 일기</h4>
-                    <div className="text_wrapper">
+                    <div className={styles.text_wrapper}>
                         <textarea placeholder="오늘은 어땠나요" 
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
@@ -87,12 +86,11 @@ const DiaryEditor = ({isEdit, originData}) => {
                     </div>
                 </section>
                 <section>
-                    <div className="control_box">
+                    <div className={styles.control_box}>
                         <Button text="취소하기" onClick={useCallback(() => {navigate("/")},[])}/>
                         <Button text="작성완료" type="positive" onClick={handleSubmit}/>
                     </div>
                 </section>
-            </div>
         </div>
     );
 }

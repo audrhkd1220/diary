@@ -1,3 +1,5 @@
+import styles from "./Login.module.scss";
+
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,11 +9,7 @@ import { mdiEmail, mdiLock } from '@mdi/js';
 import { UserStateContext } from "../App";
 
 
-const Login = () => {
-    const {setUser} = useContext(UserStateContext);
-    const [, updateState] = useState();
-    const forceUpdate = useCallback(() => updateState({}), []);
-
+const Login = ({forceUpdate}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [mdiEmailColor, setMdiEmailColor] = useState('black');
@@ -67,17 +65,17 @@ const Login = () => {
 
 
     return (
-        <div className="Login">
-            <div className="login_img_wrapper">
+        <div className={styles.Login}>
+            <div className={styles.login_img_wrapper}>
                     <img src={`${process.env.PUBLIC_URL}assets/main.svg`}/>
                     <h1>Emotion Diary</h1>
             </div>
-            <div>
-                <div className="login_form_wrapper">
-                    <form className="login_form" onSubmit={handleSubmit}>
+            <div className={styles.login_content_wrapper}>
+                <div className={styles.login_form_wrapper}>
+                    <form className={styles.login_form} onSubmit={handleSubmit}>
                         <div>
                             <p><label for="email">Email address</label></p>
-                            <div className={`input_wrapper border_${mdiEmailColor}`}>
+                            <div className={[styles.input_wrapper, `input_wrapper border_${mdiEmailColor}`].join(" ")}>
                                 <Icon path={ mdiEmail } size={1.2} color={mdiEmailColor}/>
                                 <input type="text" id="email" placeholder="아이디" required onChange={(e) => setEmail(e.target.value)}/>
                             </div>     
@@ -85,7 +83,7 @@ const Login = () => {
                         </div>
                         <div>
                             <p><label for="password">Password</label></p>
-                            <div className={`input_wrapper border_${mdiLockColor}`}>
+                            <div className={[styles.input_wrapper, `input_wrapper border_${mdiLockColor}`].join(" ")}>
                                 <Icon path={ mdiLock } size={1.2} color={mdiLockColor}/>
                                 <input type="password" id="password" placeholder="비밀번호" required onChange={(e) => setPassword(e.target.value)}/>
                             </div>
@@ -94,18 +92,18 @@ const Login = () => {
                         <button className={`disabled_btn_${btnDisabled}`} type="submit" disabled={btnDisabled}>로그인</button>
                     </form>
                 </div>
-                <div className="signUp_wrapper">
+                <div className={styles.signUp_wrapper}>
                     <button onClick={() => navigate("/signUp")}>회원가입</button>
                 </div>
-                <div className="social_login_wrapper">
+                <div className={styles.social_login_wrapper}>
                     <hr></hr>
                     <span>간편 로그인</span>
-                    <div className="social_login_btn_wrapper">
-                        <button onClick={() => socialLogin("google", setUser)} className="google_btn">
+                    <div className={styles.social_login_btn_wrapper}>
+                        <button onClick={() => socialLogin("google", forceUpdate)} className={styles.google_btn}>
                             <img src={`https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg`} />
                             <span>Sign with google</span>
                         </button>
-                        <button onClick={() => socialLogin("facebook", setUser)} className="facebook_btn">
+                        <button onClick={() => socialLogin("facebook", forceUpdate)} className={styles.facebook_btn}>
                             <img src={`${process.env.PUBLIC_URL}/assets/facebook_btn.svg`} />
                             <span>Sign with facebook</span>
                         </button>
